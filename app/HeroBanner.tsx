@@ -52,7 +52,7 @@ export default function HeroBanner() {
 
   return (
     <section className="relative min-h-[720px] overflow-hidden">
-      <div className="absolute inset-0">
+      <div className="pointer-events-none absolute inset-0">
         <Image
           src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2200&q=85"
           alt="Students walking on a university campus"
@@ -66,7 +66,7 @@ export default function HeroBanner() {
 
       <div
         aria-label="Student acceptance reaction highlights"
-        className="absolute inset-x-0 top-1/2 z-10 flex -translate-y-1/2 items-center justify-between gap-[clamp(6px,1vw,18px)] px-[clamp(10px,2vw,36px)]"
+        className="pointer-events-none absolute inset-x-0 top-1/2 z-10 flex -translate-y-1/2 items-center justify-between gap-[clamp(6px,1vw,18px)] px-[clamp(10px,2vw,36px)]"
       >
         {heroVideos.map((video, index) => (
           <div
@@ -91,7 +91,7 @@ export default function HeroBanner() {
         ))}
       </div>
 
-      <div className="hero-finale-overlay absolute inset-0 z-20 bg-[#06120f]/76" />
+      <div className="hero-finale-overlay pointer-events-none absolute inset-0 z-20 bg-[#06120f]/76" />
 
       <div className="hero-copy-reveal relative z-30 mx-auto flex min-h-[720px] max-w-5xl flex-col items-center justify-center px-5 py-20 text-center text-white lg:px-8">
         <p className="mb-5 inline-flex border border-white/30 bg-white/10 px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#d6f5e8]">

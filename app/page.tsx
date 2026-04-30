@@ -79,7 +79,7 @@ const schools = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f8f6f0] text-[#18211f]">
-      <header className="sticky top-0 z-30 border-b border-[#18211f]/10 bg-[#f8f6f0]/92 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-[#18211f]/10 bg-[#f8f6f0]/92 backdrop-blur">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <a href="#" className="text-xl font-black tracking-tight">
             IvyAdmits
@@ -252,7 +252,7 @@ export default function Home() {
           <div className="mt-8 overflow-hidden bg-[#f8f6f0]">
             <div
               className="calendly-inline-widget h-[700px] min-w-80"
-              data-url="https://calendly.com/contact-ivyadmits/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f8f6f0&text_color=18211f&primary_color=0b5d4a"
+              data-url="https://calendly.com/contact-ivyadmits/30min"
             />
             <Script
               src="https://assets.calendly.com/assets/external/widget.js"
