@@ -46,6 +46,7 @@ const steps = [
   "Coach essays, activities, recommendations, and interviews through submission.",
 ];
 
+/*
 const schools = [
   { name: "Harvard", logo: "/school-logos/harvard.png" },
   { name: "Yale", logo: "/school-logos/yale.png" },
@@ -60,6 +61,7 @@ const schools = [
   { name: "Duke", logo: "/school-logos/duke.png" },
   { name: "UChicago", logo: "/school-logos/uchicago.png" },
 ];
+*/
 
 export default function Home() {
   return (
@@ -155,6 +157,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/*
       <section
         id="results"
         className="scroll-mt-20 border-b border-[#18211f]/10 bg-white"
@@ -182,6 +185,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      */}
 
       <section
         id="services"
@@ -303,8 +307,8 @@ export default function Home() {
         id="contact"
         className="mx-auto max-w-7xl scroll-mt-20 px-5 py-20 lg:px-8"
       >
-        <div className="grid gap-8 bg-[#0b5d4a] p-6 text-white md:grid-cols-[0.85fr_1.15fr] md:p-10">
-          <div>
+        <div className="bg-[#0b5d4a] p-6 text-white md:p-10">
+          <div className="max-w-3xl">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-[#f3c64e]">
               Free consultation
             </p>
@@ -316,7 +320,7 @@ export default function Home() {
               where IvyAdmits can help.
             </p>
           </div>
-          <div className="min-h-[720px] overflow-hidden bg-white">
+          <div className="mt-8 min-h-[720px] overflow-hidden bg-white">
             <iframe
               src="https://calendly.com/contact-ivyadmits/30min"
               title="Schedule a 15-minute IvyAdmits consultation"
