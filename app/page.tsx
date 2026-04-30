@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import HelpCarousel from "./HelpCarousel";
-import HeroVideoMosaic from "./HeroVideoMosaic";
+import HeroBanner from "./HeroBanner";
 
 const helpItems = [
   {
@@ -87,50 +87,7 @@ export default function Home() {
         </nav>
       </header>
 
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=2200&q=85"
-            alt="Students walking on a university campus"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-[#06120f]/70" />
-        </div>
-        <div className="relative mx-auto grid min-h-[720px] max-w-7xl items-center gap-10 px-5 py-20 text-white lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
-          <div className="max-w-3xl pt-6">
-            <p className="mb-5 inline-flex border border-white/30 bg-white/10 px-3 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#d6f5e8]">
-              College admissions consulting
-            </p>
-            <h1 className="text-5xl font-black leading-[0.96] tracking-normal sm:text-6xl lg:text-7xl">
-              Ivy-caliber guidance for standout applications.
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-white/84">
-              IvyAdmits helps ambitious students turn strong grades, activities,
-              essays, and goals into a focused application strategy for highly
-              selective colleges.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#contact"
-                className="inline-flex min-h-12 items-center justify-center rounded-sm bg-[#f3c64e] px-7 text-sm font-black text-[#10201b] transition hover:bg-[#ffd762]"
-              >
-                Start your admissions plan
-              </a>
-              <a
-                href="#services"
-                className="inline-flex min-h-12 items-center justify-center rounded-sm border border-white/35 px-7 text-sm font-extrabold text-white transition hover:bg-white/10"
-              >
-                Explore services
-              </a>
-            </div>
-          </div>
-
-          <HeroVideoMosaic />
-        </div>
-      </section>
+      <HeroBanner />
 
       {/*
       <section
