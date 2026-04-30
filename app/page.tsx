@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import HelpCarousel from "./HelpCarousel";
 import HeroBanner from "./HeroBanner";
 
@@ -41,10 +39,22 @@ const helpItems = [
   },
 ];
 
-const steps = [
-  "Diagnose goals, strengths, deadlines, and family priorities.",
-  "Design the college list, application calendar, and positioning plan.",
-  "Coach essays, activities, recommendations, and interviews through submission.",
+const processSteps = [
+  {
+    action: "Ideate",
+    detail: "your student's storyline",
+    body: "Find the themes, strengths, and experiences that can become a compelling admissions narrative.",
+  },
+  {
+    action: "Form",
+    detail: "your student's storyline",
+    body: "Turn that direction into a practical plan across activities, essays, school strategy, and deadlines.",
+  },
+  {
+    action: "Display",
+    detail: "your student's storyline",
+    body: "Refine every application piece so the final submission presents one clear, memorable student.",
+  },
 ];
 
 /*
@@ -144,29 +154,38 @@ export default function Home() {
       </section>
 
       <section id="process" className="scroll-mt-20 bg-[#10201b] text-white">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-          <div>
+        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+          <div className="max-w-3xl">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-[#f3c64e]">
               Process
             </p>
-            <h2 className="mt-4 text-4xl font-black leading-tight">
-              Clear milestones for a stressful season.
+            <h2 className="mt-4 max-w-xl text-4xl font-black leading-tight sm:text-5xl">
+              Build the storyline before the application.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-white/74">
-              Families get structure, students get momentum, and every major
-              application choice has a reason behind it.
-            </p>
           </div>
-          <div className="grid gap-4">
-            {steps.map((step, index) => (
-              <div key={step} className="grid grid-cols-[48px_1fr] gap-5 border border-white/15 p-5">
-                <span className="flex h-12 w-12 items-center justify-center bg-[#f3c64e] text-lg font-black text-[#10201b]">
-                  {index + 1}
+          <ol className="mt-14 grid gap-6 md:grid-cols-3 md:gap-0">
+            {processSteps.map((step, index) => (
+              <li
+                key={step.action}
+                className="relative grid gap-5 border border-white/14 bg-white/[0.04] p-6 md:border-l-0 md:first:border-l"
+              >
+                <span className="relative z-10 flex h-12 w-12 items-center justify-center border border-[#f3c64e] bg-[#10201b] text-base font-black text-[#f3c64e] shadow-[0_0_0_8px_#10201b]">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-                <p className="self-center text-lg leading-7 text-white/86">{step}</p>
-              </div>
+                <h3 className="leading-tight">
+                  <span className="block text-4xl font-black text-[#f3c64e]">
+                    {step.action}
+                  </span>
+                  <span className="mt-2 block text-xl font-black text-white">
+                    {step.detail}
+                  </span>
+                </h3>
+                <p className="text-base leading-7 text-white/76">
+                  {step.body}
+                </p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
