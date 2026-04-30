@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import HelpCarousel from "./HelpCarousel";
 import HeroBanner from "./HeroBanner";
 
@@ -230,11 +232,14 @@ export default function Home() {
               where IvyAdmits can help.
             </p>
           </div>
-          <div className="mt-8 min-h-[720px] overflow-hidden bg-white">
-            <iframe
-              src="https://calendly.com/contact-ivyadmits/30min"
-              title="Schedule a 15-minute IvyAdmits consultation"
-              className="h-[720px] w-full border-0"
+          <div className="mt-8 overflow-hidden bg-[#f8f6f0]">
+            <div
+              className="calendly-inline-widget h-[700px] min-w-80"
+              data-url="https://calendly.com/contact-ivyadmits/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f8f6f0&text_color=18211f&primary_color=0b5d4a"
+            />
+            <Script
+              src="https://assets.calendly.com/assets/external/widget.js"
+              strategy="lazyOnload"
             />
           </div>
         </div>
