@@ -16,12 +16,12 @@ const helpItems = [
   {
     title: "Competing at hackathons",
     subtitle: "Pick stronger problems, build quickly, and present the product with technical clarity.",
-    image: "/help-carousel/startup.jpg",
+    image: "/help-carousel/startup-upright.jpg",
   },
   {
     title: "Working at a startup",
     subtitle: "Find useful roles, document ownership, and translate shipped work into application proof.",
-    image: "/help-carousel/startup.jpg",
+    image: "/help-carousel/startup-upright.jpg",
   },
   {
     title: "Competing in Olympiads",

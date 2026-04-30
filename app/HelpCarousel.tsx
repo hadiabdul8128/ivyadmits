@@ -18,7 +18,11 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const interactionTimer = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeLoopIndex, setActiveLoopIndex] = useState(items.length * 2);
   const [isInteracting, setIsInteracting] = useState(false);
+  const loopedItems = Array.from({ length: 5 }, () => items).flat();
+  const initialItemIndex = Math.floor(items.length / 2);
+  const initialLoopIndex = items.length * 2 + initialItemIndex;
 
   const scrollToCard = useCallback((index: number) => {
     const rail = railRef.current;
@@ -31,6 +35,34 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
     const left = card.offsetLeft - (rail.clientWidth - card.clientWidth) / 2;
     rail.scrollTo({ left, behavior: "smooth" });
   }, []);
+
+  const jumpToCard = useCallback((index: number) => {
+    const rail = railRef.current;
+    const card = cardRefs.current[index];
+
+    if (!rail || !card) {
+      return;
+    }
+
+    const left = card.offsetLeft - (rail.clientWidth - card.clientWidth) / 2;
+    rail.scrollTo({ left, behavior: "instant" });
+  }, []);
+
+  const recenterFromCard = useCallback(
+    (currentIndex: number, recenteredIndex: number) => {
+      const rail = railRef.current;
+      const currentCard = cardRefs.current[currentIndex];
+      const recenteredCard = cardRefs.current[recenteredIndex];
+
+      if (!rail || !currentCard || !recenteredCard) {
+        return;
+      }
+
+      const left = rail.scrollLeft + recenteredCard.offsetLeft - currentCard.offsetLeft;
+      rail.scrollTo({ left, behavior: "instant" });
+    },
+    [],
+  );
 
   useEffect(() => {
     const rail = railRef.current;
@@ -60,10 +92,22 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
         }
       });
 
-      setActiveIndex(closestIndex);
+      setActiveIndex(closestIndex % items.length);
+      setActiveLoopIndex(closestIndex);
+
+      if (closestIndex < items.length || closestIndex >= items.length * 4) {
+        const recenteredIndex = items.length * 2 + (closestIndex % items.length);
+
+        window.requestAnimationFrame(() => {
+          setActiveLoopIndex(recenteredIndex);
+          recenterFromCard(closestIndex, recenteredIndex);
+        });
+      }
     };
 
-    updateActiveCard();
+    jumpToCard(initialLoopIndex);
+    setActiveIndex(initialItemIndex);
+    setActiveLoopIndex(initialLoopIndex);
     rail.addEventListener("scroll", updateActiveCard, { passive: true });
     window.addEventListener("resize", updateActiveCard);
 
@@ -71,7 +115,13 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
       rail.removeEventListener("scroll", updateActiveCard);
       window.removeEventListener("resize", updateActiveCard);
     };
-  }, []);
+  }, [
+    initialItemIndex,
+    initialLoopIndex,
+    items.length,
+    jumpToCard,
+    recenterFromCard,
+  ]);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -83,11 +133,26 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
     }
 
     const interval = window.setInterval(() => {
-      scrollToCard((activeIndex + 1) % items.length);
+      const currentLoopIndex = cardRefs.current.findIndex((card) => {
+        if (!card || !railRef.current) {
+          return false;
+        }
+
+        const railBox = railRef.current.getBoundingClientRect();
+        const cardBox = card.getBoundingClientRect();
+        const railCenter = railBox.left + railBox.width / 2;
+        const cardCenter = cardBox.left + cardBox.width / 2;
+
+        return Math.abs(railCenter - cardCenter) < cardBox.width / 2;
+      });
+
+      scrollToCard(
+        (currentLoopIndex === -1 ? initialLoopIndex : currentLoopIndex) + 1,
+      );
     }, 3200);
 
     return () => window.clearInterval(interval);
-  }, [activeIndex, isInteracting, items.length, scrollToCard]);
+  }, [initialLoopIndex, isInteracting, scrollToCard]);
 
   useEffect(() => {
     return () => {
@@ -118,16 +183,16 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
         onTouchStart={pauseForInteraction}
         onWheel={pauseForInteraction}
       >
-        {items.map((item, index) => {
-          const isActive = index === activeIndex;
+        {loopedItems.map((item, index) => {
+          const isActive = index === activeLoopIndex;
 
           return (
             <article
-              key={item.title}
+              key={`${item.title}-${index}`}
               ref={(node) => {
                 cardRefs.current[index] = node;
               }}
-              className={`help-focus-card relative h-[520px] w-[78vw] max-w-[350px] shrink-0 snap-center overflow-hidden rounded-[8px] bg-[#111b17] shadow-[0_24px_70px_rgba(24,33,31,0.16)] transition duration-700 ease-out sm:h-[560px] sm:w-[350px] ${
+              className={`help-focus-card relative h-[520px] w-[78vw] max-w-[350px] shrink-0 snap-center overflow-hidden rounded-[8px] bg-[#111b17] transition duration-700 ease-out sm:h-[560px] sm:w-[350px] ${
                 isActive
                   ? "scale-100 opacity-100"
                   : "scale-[0.92] opacity-55 blur-[0.5px]"
@@ -138,7 +203,7 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
                 src={item.image}
                 alt=""
                 fill
-                priority={index === 0}
+                priority={index === initialLoopIndex}
                 sizes="(min-width: 640px) 350px, 78vw"
                 className={`object-cover transition duration-700 ease-out ${
                   isActive ? "scale-[1.03]" : "scale-100"
@@ -150,10 +215,7 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
                 }`}
               />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-6">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#f3c64e]">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-3 text-2xl font-black leading-7 tracking-normal sm:text-3xl sm:leading-9">
+                <h3 className="text-2xl font-black leading-7 tracking-normal sm:text-3xl sm:leading-9">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm font-semibold leading-6 text-white/78 sm:text-base sm:leading-7">
@@ -178,7 +240,7 @@ export default function HelpCarousel({ items }: HelpCarouselProps) {
             aria-label={`Show ${item.title}`}
             onClick={() => {
               pauseForInteraction();
-              scrollToCard(index);
+              scrollToCard(items.length * 2 + index);
             }}
           />
         ))}
