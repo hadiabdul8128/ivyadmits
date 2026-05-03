@@ -35,6 +35,11 @@ const helpItems = [
     image: "/help-carousel/competition.jpg",
   },
   {
+    title: "Winning competitions",
+    subtitle: "Turn focused preparation, confident presentation, and real results into standout application stories.",
+    image: "/help-carousel/fbla-national-champion.jpg",
+  },
+  {
     title: "Researching in a lab",
     subtitle: "Plan mentor outreach, methods, documentation, and credible next steps for publication.",
     image: "/help-carousel/research-conference.jpg",
