@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Script from "next/script";
 
 import HelpCarousel from "./HelpCarousel";
 import HeroBanner from "./HeroBanner";
@@ -41,10 +41,22 @@ const helpItems = [
   },
 ];
 
-const steps = [
-  "Diagnose goals, strengths, deadlines, and family priorities.",
-  "Design the college list, application calendar, and positioning plan.",
-  "Coach essays, activities, recommendations, and interviews through submission.",
+const processSteps = [
+  {
+    action: "Ideate",
+    detail: "your student's storyline",
+    body: "Find the themes, strengths, and experiences that can become a compelling admissions narrative.",
+  },
+  {
+    action: "Form",
+    detail: "your student's storyline",
+    body: "Turn that direction into a practical plan across activities, essays, school strategy, and deadlines.",
+  },
+  {
+    action: "Display",
+    detail: "your student's storyline",
+    body: "Refine every application piece so the final submission presents one clear, memorable student.",
+  },
 ];
 
 /*
@@ -67,7 +79,7 @@ const schools = [
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f8f6f0] text-[#18211f]">
-      <header className="sticky top-0 z-30 border-b border-[#18211f]/10 bg-[#f8f6f0]/92 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-[#18211f]/10 bg-[#f8f6f0]/92 backdrop-blur">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <a href="#" className="text-xl font-black tracking-tight">
             IvyAdmits
@@ -144,29 +156,38 @@ export default function Home() {
       </section>
 
       <section id="process" className="scroll-mt-20 bg-[#10201b] text-white">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
-          <div>
+        <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
+          <div className="max-w-3xl">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-[#f3c64e]">
               Process
             </p>
-            <h2 className="mt-4 text-4xl font-black leading-tight">
-              Clear milestones for a stressful season.
+            <h2 className="mt-4 max-w-xl text-4xl font-black leading-tight sm:text-5xl">
+              Build the storyline before the application.
             </h2>
-            <p className="mt-5 text-lg leading-8 text-white/74">
-              Families get structure, students get momentum, and every major
-              application choice has a reason behind it.
-            </p>
           </div>
-          <div className="grid gap-4">
-            {steps.map((step, index) => (
-              <div key={step} className="grid grid-cols-[48px_1fr] gap-5 border border-white/15 p-5">
-                <span className="flex h-12 w-12 items-center justify-center bg-[#f3c64e] text-lg font-black text-[#10201b]">
-                  {index + 1}
+          <ol className="mt-14 grid gap-6 md:grid-cols-3 md:gap-0">
+            {processSteps.map((step, index) => (
+              <li
+                key={step.action}
+                className="relative grid gap-5 border border-white/14 bg-white/[0.04] p-6 md:border-l-0 md:first:border-l"
+              >
+                <span className="relative z-10 flex h-12 w-12 items-center justify-center border border-[#f3c64e] bg-[#10201b] text-base font-black text-[#f3c64e] shadow-[0_0_0_8px_#10201b]">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-                <p className="self-center text-lg leading-7 text-white/86">{step}</p>
-              </div>
+                <h3 className="leading-tight">
+                  <span className="block text-4xl font-black text-[#f3c64e]">
+                    {step.action}
+                  </span>
+                  <span className="mt-2 block text-xl font-black text-white">
+                    {step.detail}
+                  </span>
+                </h3>
+                <p className="text-base leading-7 text-white/76">
+                  {step.body}
+                </p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -174,21 +195,38 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
           <div className="max-w-3xl">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0b5d4a]">
-              Social proof placeholders
+              Our team
             </p>
-            <h2 className="mt-4 text-4xl font-black leading-tight">
-              Add your real results, counselor bios, and student stories here.
+            <h2 className="mt-4 text-4xl font-black leading-tight sm:text-5xl">
+              Guidance from people who know elite admissions from the inside.
             </h2>
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
-              "Replace this with an acceptance story, parent quote, or case study.",
-              "Add counselor credentials, admissions reader experience, or school specialties.",
-              "Show verified outcomes, scholarship wins, or program completion metrics.",
-            ].map((quote) => (
-              <blockquote key={quote} className="border border-[#18211f]/12 p-6">
-                <p className="text-lg leading-8 text-[#33413d]">{quote}</p>
-              </blockquote>
+              {
+                title: "Students at top 5 universities",
+                body: "Current students and recent admits help translate ambition into school-specific strategy, activities, and essays that feel current.",
+              },
+              {
+                title: "Former admissions officers",
+                body: "Experienced readers bring judgment on positioning, evaluation, and the details that make an application easier to understand.",
+              },
+              {
+                title: "PhD researchers and specialists",
+                body: "Subject experts support students building research, academic depth, competitions, and distinctive intellectual projects.",
+              },
+            ].map((item) => (
+              <article
+                key={item.title}
+                className="border border-[#18211f]/12 bg-[#f8f6f0] p-6"
+              >
+                <p className="text-3xl font-black leading-tight text-[#0b5d4a]">
+                  {item.title}
+                </p>
+                <p className="mt-4 text-base leading-7 text-[#596560]">
+                  {item.body}
+                </p>
+              </article>
             ))}
           </div>
         </div>
@@ -211,11 +249,14 @@ export default function Home() {
               where IvyAdmits can help.
             </p>
           </div>
-          <div className="mt-8 min-h-[720px] overflow-hidden bg-white">
-            <iframe
-              src="https://calendly.com/contact-ivyadmits/30min"
-              title="Schedule a 15-minute IvyAdmits consultation"
-              className="h-[720px] w-full border-0"
+          <div className="mt-8 overflow-hidden bg-[#f8f6f0]">
+            <div
+              className="calendly-inline-widget h-[700px] min-w-80"
+              data-url="https://calendly.com/contact-ivyadmits/30min"
+            />
+            <Script
+              src="https://assets.calendly.com/assets/external/widget.js"
+              strategy="lazyOnload"
             />
           </div>
         </div>
