@@ -1,4 +1,5 @@
 import Script from "next/script";
+import Image from "next/image";
 
 import HelpCarousel from "./HelpCarousel";
 import HeroBanner from "./HeroBanner";
@@ -61,6 +62,26 @@ const processSteps = [
     action: "Display",
     detail: "your student's storyline",
     body: "Refine every application piece so the final submission presents one clear, memorable student.",
+  },
+];
+
+const teamItems = [
+  {
+    title: "Hadi Abdul",
+    body: "IvyAdmits advisor",
+    image: "/team/hadi-abdul-headshot.jpg",
+  },
+  {
+    title: "Students at top 5 universities",
+    body: "Current students and recent admits help translate ambition into school-specific strategy, activities, and essays that feel current.",
+  },
+  {
+    title: "Former admissions officers",
+    body: "Experienced readers bring judgment on positioning, evaluation, and the details that make an application easier to understand.",
+  },
+  {
+    title: "PhD researchers and specialists",
+    body: "Subject experts support students building research, academic depth, competitions, and distinctive intellectual projects.",
   },
 ];
 
@@ -206,21 +227,8 @@ export default function Home() {
               Guidance from people who know elite admissions from the inside.
             </h2>
           </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {[
-              {
-                title: "Students at top 5 universities",
-                body: "Current students and recent admits help translate ambition into school-specific strategy, activities, and essays that feel current.",
-              },
-              {
-                title: "Former admissions officers",
-                body: "Experienced readers bring judgment on positioning, evaluation, and the details that make an application easier to understand.",
-              },
-              {
-                title: "PhD researchers and specialists",
-                body: "Subject experts support students building research, academic depth, competitions, and distinctive intellectual projects.",
-              },
-            ].map((item) => (
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {teamItems.map((item) => (
               <article
                 key={item.title}
                 className="border border-[#18211f]/12 bg-[#f8f6f0] p-6"
@@ -228,6 +236,17 @@ export default function Home() {
                 <p className="text-3xl font-black leading-tight text-[#0b5d4a]">
                   {item.title}
                 </p>
+                {item.image ? (
+                  <div className="relative mt-5 aspect-[4/5] overflow-hidden bg-[#10201b]/8">
+                    <Image
+                      src={item.image}
+                      alt="Hadi Abdul headshot"
+                      fill
+                      sizes="(min-width: 1024px) 280px, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover object-[50%_22%]"
+                    />
+                  </div>
+                ) : null}
                 <p className="mt-4 text-base leading-7 text-[#596560]">
                   {item.body}
                 </p>
